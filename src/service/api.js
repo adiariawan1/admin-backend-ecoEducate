@@ -54,5 +54,51 @@ export const adminApi = {
 
     if (error) throw error;
     return data;
+  },
+
+  
+  
+  getGallery: async () => {
+    const { data, error } = await supabase
+      .from('gallery')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data;
+  },
+
+  
+  createGalleryItem: async (payload) => {
+    const { data, error } = await supabase
+      .from('gallery')
+      .insert([payload])
+      .select();
+    if (error) throw error;
+    return data;
+  },
+
+  
+  deleteGalleryItem: async (id) => {
+    const { error } = await supabase
+      .from('gallery')
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
+    return true;
+  },
+
+  
+  uploadImage: async (file) => {
+    const fileName = `${Date.now()}_${file.name}`;
+    const { data, error } = await supabase.storage
+      .from('images') // Pastikan bucket 'images' sudah ada
+      .upload(fileName, file);
+    if (error) throw error;
+    
+    const { data: publicUrlData } = supabase.storage
+      .from('images')
+      .getPublicUrl(fileName);
+      
+    return publicUrlData.publicUrl;
   }
 };
