@@ -91,12 +91,12 @@ export const adminApi = {
   uploadImage: async (file) => {
     const fileName = `${Date.now()}_${file.name}`;
     const { data, error } = await supabase.storage
-      .from('images') // Pastikan bucket 'images' sudah ada
+      .from('campaign-images')
       .upload(fileName, file);
     if (error) throw error;
     
     const { data: publicUrlData } = supabase.storage
-      .from('images')
+      .from('campaign-images')
       .getPublicUrl(fileName);
       
     return publicUrlData.publicUrl;

@@ -75,19 +75,34 @@ export default function Dashboard() {
   };
 
   const handleDelete = async (id, type) => {
-    if (!confirm("Yakin hapus?")) return;
+    // 1. Cek apakah ID masuk?
+    console.log("Mencoba menghapus ID:", id, "Tipe:", type);
+
+    if (!id) {
+        alert("Error: ID tidak ditemukan!");
+        return;
+    }
+
+    if (!confirm("Yakin ingin menghapus item ini?")) return;
 
     try {
-      if (type === "campaign") {
-        await adminApi.deleteCampaign(id);
-      } else if (type === "gallery") {
-        await adminApi.deleteGalleryItem(id);
-      }
-      fetchData();
+        if (type === "campaign") {
+            console.log("Mengirim request hapus campaign..."); // Log ini
+            await adminApi.deleteCampaign(id);
+        } else {
+            console.log("Mengirim request hapus gallery..."); // Log ini
+            await adminApi.deleteGalleryItem(id);
+        }
+        
+        console.log("Berhasil menghapus, refresh data...");
+        fetchData(); // Refresh data setelah hapus
+        alert("Berhasil dihapus!"); // Beri notifikasi sukses
+
     } catch (err) {
-      alert("Gagal menghapus: " + err.message);
+        console.error("Error Detail:", err); // Lihat detail error di Console (F12)
+        alert("Gagal menghapus: " + err.message);
     }
-  };
+};
 
   const handleFormSubmit = async (formData, imageFile) => {
     try {

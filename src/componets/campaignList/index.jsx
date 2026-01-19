@@ -1,14 +1,16 @@
 import React from "react";
 import { Pencil, Trash2 } from "lucide-react";
 
-/**
- * Menampilkan daftar kampanye dalam bentuk Grid
- * Props:
- * - campaigns: Array data kampanye
- * - onEdit: Fungsi ketika tombol edit diklik
- * - onDelete: Fungsi ketika tombol hapus diklik
- */
 export default function CampaignList({ campaigns, onEdit, onDelete }) {
+  // Fungsi helper untuk format Rupiah
+  const formatRupiah = (number) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0,
+    }).format(number);
+  };
+
   if (campaigns.length === 0) {
     return (
       <div className="text-center py-12 bg-white rounded-xl border border-dashed border-slate-300">
@@ -21,9 +23,10 @@ export default function CampaignList({ campaigns, onEdit, onDelete }) {
     <div className="mb-10">
       <h2 className="text-lg font-bold text-slate-800 mb-4">Kampanye Berjalan</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {campaigns.map((camp) => (
+        {campaigns.map((camp, index) => (
           <div
-            key={camp.id}
+            // SAFETY: Gunakan index jika id tidak ada (biar gak error warning key)
+            key={camp.id || index} 
             className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition duration-300 group"
           >
             {/* Header Gambar */}
@@ -53,21 +56,21 @@ export default function CampaignList({ campaigns, onEdit, onDelete }) {
                 {camp.description}
               </p>
 
-              {/* Lokasi (Jika ada) */}
+              {/* Lokasi */}
               {camp.region && (
                 <p className="text-xs text-orange-500 font-semibold mb-2 flex items-center gap-1">
                   📍 {camp.region}
                 </p>
               )}
 
-              {/* Progress Bar */}
+              {/* Progress Bar & Uang (Ubah ke Rupiah) */}
               <div className="space-y-2 mb-6">
                 <div className="flex justify-between text-sm">
                   <span className="font-bold text-emerald-600">
-                    ${Number(camp.raised_amount || 0).toLocaleString()}
+                    {formatRupiah(camp.raised_amount || 0)}
                   </span>
                   <span className="text-slate-400 text-xs">
-                    Target: ${Number(camp.target_amount || 0).toLocaleString()}
+                    Target: {formatRupiah(camp.target_amount || 0)}
                   </span>
                 </div>
                 <div className="w-full bg-slate-100 rounded-full h-2">
@@ -87,12 +90,12 @@ export default function CampaignList({ campaigns, onEdit, onDelete }) {
               <div className="flex gap-3 pt-4 border-t border-slate-50">
                 <button
                   onClick={() => onEdit(camp)}
-                  className="flex-1 py-2 px-3 bg-slate-50 text-slate-600 rounded-lg hover:bg-emerald-50 hover:text-orange-600 text-sm font-medium flex items-center justify-center gap-2 transition"
+                  className="flex-1 py-2 px-3 bg-slate-50 text-slate-600 rounded-lg hover:bg-emerald-50 hover:text-emerald-600 text-sm font-medium flex items-center justify-center gap-2 transition"
                 >
                   <Pencil size={16} /> Edit
                 </button>
                 <button
-                  onClick={() => onDelete(camp.id)}
+                  onClick={() => onDelete(camp.campaign_id || camp.id)}
                   className="flex-1 py-2 px-3 bg-slate-50 text-slate-600 rounded-lg hover:bg-red-50 hover:text-red-600 text-sm font-medium flex items-center justify-center gap-2 transition"
                 >
                   <Trash2 size={16} /> Hapus
