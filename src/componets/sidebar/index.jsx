@@ -43,7 +43,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
 
       {/* Footer Sidebar */}
       <div className="p-4 border-t border-slate-100">
-        <p className="text-xs text-center text-slate-400">© 2026 EcoEducate</p>
+        <p className="text-xs text-center text-slate-400">©  EcoEducate</p>
       </div>
     </aside>
   );
