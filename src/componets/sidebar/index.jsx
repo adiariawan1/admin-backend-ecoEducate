@@ -11,8 +11,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
     <aside className="w-64 bg-white border-r border-slate-200 hidden md:flex flex-col fixed h-full z-10">
       {/* Logo Area */}
       <div className="p-6 flex items-center gap-3 border-b border-slate-100">
-        <div className="bg-emerald-100 p-2 rounded-lg">
-          <Leaf className="text-orange-500" size={24} />
+        <div className="">
         </div>
         <span className="font-bold text-xl text-slate-800">EcoAdmin</span>
       </div>

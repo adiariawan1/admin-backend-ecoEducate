@@ -1,10 +1,7 @@
 import React from "react";
 import { Wallet, Users, Leaf } from "lucide-react";
 
-/**
- * Komponen Kartu Statistik Utama
- * Menerima object stats: { totalRaised, totalDonors, activeCampaigns }
- */
+
 export default function StatCards({ stats }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -33,7 +30,7 @@ export default function StatCards({ stats }) {
   );
 }
 
-// Sub-komponen kecil untuk desain kartu (agar tidak duplikasi kode)
+
 function CardItem({ title, value, icon, bg, text }) {
   return (
     <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-5 hover:shadow-md transition">

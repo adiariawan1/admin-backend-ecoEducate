@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { UploadCloud, Loader2, X } from "lucide-react";
 
-/**
- * Modal Pintar untuk Create/Edit
- * Bisa menangani form Campaign DAN form Gallery
- */
+
 export default function DashboardModal({
   isOpen,
   onClose,
-  onSubmit, // Fungsi yang dipanggil saat submit (menerima payload & file)
-  initialData = {}, // Data awal jika mode Edit
-  activeTab, // 'campaigns' atau 'gallery' untuk menentukan form mana yang muncul
+  onSubmit, 
+  initialData = {}, 
+  activeTab, 
 }) {
   const [formData, setFormData] = useState({
     title: "",
@@ -23,7 +20,7 @@ export default function DashboardModal({
   const [imageFile, setImageFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Efek: Saat modal dibuka atau data berubah, isi form
+
   useEffect(() => {
     if (isOpen) {
       setFormData({
@@ -34,7 +31,7 @@ export default function DashboardModal({
         latitude: initialData.latitude || "",
         longitude: initialData.longitude || "",
       });
-      setImageFile(null); // Reset file
+      setImageFile(null); 
       setIsSubmitting(false);
     }
   }, [isOpen, initialData]);
@@ -43,7 +40,6 @@ export default function DashboardModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Kirim data ke Parent (index.jsx)
     await onSubmit(formData, imageFile);
     setIsSubmitting(false);
   };
@@ -72,7 +68,6 @@ export default function DashboardModal({
 
         {/* Body Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
-          {/* Judul (Dipakai di Campaign & Gallery) */}
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-1.5">
               {isCampaign ? "Judul Kampanye" : "Judul Foto / Kegiatan"}

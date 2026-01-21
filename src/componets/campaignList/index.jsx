@@ -2,7 +2,6 @@ import React from "react";
 import { Pencil, Trash2 } from "lucide-react";
 
 export default function CampaignList({ campaigns, onEdit, onDelete }) {
-  // Fungsi helper untuk format Rupiah
   const formatRupiah = (number) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -25,7 +24,6 @@ export default function CampaignList({ campaigns, onEdit, onDelete }) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {campaigns.map((camp, index) => (
           <div
-            // SAFETY: Gunakan index jika id tidak ada (biar gak error warning key)
             key={camp.id || index} 
             className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition duration-300 group"
           >
@@ -63,7 +61,7 @@ export default function CampaignList({ campaigns, onEdit, onDelete }) {
                 </p>
               )}
 
-              {/* Progress Bar & Uang (Ubah ke Rupiah) */}
+              {/* Progress Bar & Uang */}
               <div className="space-y-2 mb-6">
                 <div className="flex justify-between text-sm">
                   <span className="font-bold text-emerald-600">
